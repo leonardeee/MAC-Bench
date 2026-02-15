@@ -1,0 +1,3 @@
+GDPR Article 5(1)(c) - Personal data shall be adequate, relevant and limited to what is necessary in relation to the purposes for which they are processed (data minimization).
+
+GDPR Article 32 - The controller and the processor shall implement appropriate technical and organizational measures to ensure a level of security appropriate to the risk.

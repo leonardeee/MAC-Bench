@@ -1,0 +1,3 @@
+Internal Policy 4.2 - Authentication must be validated for every privileged API endpoint. Expired tokens must be rejected.
+
+Internal Policy 6.1 - Audit logging must remain enabled during maintenance. Logs may be archived but not deleted without retention approval.

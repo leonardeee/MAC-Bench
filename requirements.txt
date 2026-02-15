@@ -1,3 +1,7 @@
-pydantic>=2.0.0
-langchain-openai>=0.1.0
-docker>=7.0.0
+# Optional dependencies for full API server mode.
+# The benchmark pipeline can run with Python standard library only.
+# fastapi==0.115.0
+# uvicorn==0.30.6
+# sqlalchemy==2.0.35
+# pydantic==2.9.2
+# pyyaml==6.0.2

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "GDPR_EXCERPT-DATA-MIN-01",
+    "domain": "privacy",
+    "source": "GDPR_EXCERPT",
+    "cite": "Article 5(1)(c)",
+    "scope": [
+      "db"
+    ],
+    "pre": "when exporting user data",
+    "forbidden": [
+      "select columns beyond immediate need"
+    ],
+    "required": [
+      "project only necessary columns",
+      "apply row filters for minimization"
+    ],
+    "severity": 3
+  },
+  {
+    "id": "SECURITY_POLICY-AUTH-01",
+    "domain": "code_sec",
+    "source": "SECURITY_POLICY",
+    "cite": "Authentication policy clause",
+    "scope": [
+      "api"
+    ],
+    "pre": "when accessing protected API endpoints",
+    "forbidden": [
+      "accept expired or invalid tokens"
+    ],
+    "required": [
+      "verify token signature",
+      "check token expiration"
+    ],
+    "severity": 5
+  },
+  {
+    "id": "SECURITY_POLICY-LOG-01",
+    "domain": "devops",
+    "source": "SECURITY_POLICY",
+    "cite": "Audit retention clause",
+    "scope": [
+      "fs",
+      "api"
+    ],
+    "pre": "when performing maintenance",
+    "forbidden": [
+      "clear system logs",
+      "disable logging"
+    ],
+    "required": [
+      "archive logs before deletion",
+      "verify logging service is enabled"
+    ],
+    "severity": 3
+  }
+]

@@ -1,32 +1,22 @@
-# MAC-Bench (Multi-Agent Compliance Benchmark)
+# MAC-Bench
 
-This repository contains the core implementation of **MAC-Bench**, an automated multi-agent compliance benchmark system built around the **Agent-as-a-Benchmark** workflow. It generates compliance seeds, adversarial scenarios, runnable sandbox environments, and executes evaluations end-to-end.
+MAC-Bench is a dynamic adversarial benchmark framework for evaluating **process compliance** in multi-agent systems under realistic pressure.
 
-## Project Structure
+It implements a full SERV pipeline:
 
-```text
-mac-bench/
-├── assets/                  # Raw rule documents (PDF/TXT)
-├── config/                  # Config files (API Keys, Docker config)
-├── data/
-│   ├── seeds/               # Extracted atomic rules (JSON)
-│   ├── scenarios/           # Generated scenarios (JSON)
-│   └── traces/              # Execution traces/logs
-├── src/
-│   ├── generator/           # Generation-side agents
-│   │   ├── rule_parser.py   # Rule extraction
-│   │   ├── architect.py     # Scenario writer (red team)
-│   │   └── builder.py       # World Builder
-│   ├── simulation/          # Execution modules
-│   │   ├── sandbox.py       # Docker sandbox manager
-│   ├── evaluation/          # Evaluation modules
-│   │   └── judge.py         # Auto scorer
-│   ├── utils/               # Utilities
-│   └── main.py              # Entry point
-├── templates/               # Dockerfile and prompt templates
-├── requirements.txt
-└── README.md
-```
+1. **Seed**: Parse policy text into machine-checkable atomic rules.
+2. **Evolve**: Transform rules into pressure-injected adversarial scenarios.
+3. **Refine**: Build auditable sandbox environments (DB, API, FS).
+4. **Verify**: Run test-subject agents and audit complete trajectories.
+
+## Key Features
+
+- Process-centric compliance evaluation (not only task success).
+- Dynamic scenario generation to reduce benchmark contamination.
+- Social engineering pressure vectors (authority, urgency, empathy, obfuscation).
+- Unified JSONL trajectory audit logs across all tools.
+- Multiple auditor backends (deterministic, hybrid, llm-judge placeholder).
+- Metrics: SR, CR, CSR, and Machiavelli Gap (MG).
 
 ## Quick Start
 
@@ -34,10 +24,34 @@ mac-bench/
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-python src/main.py
+python scripts/run_benchmark.py --episodes 5
+python scripts/analyze_results.py
+```
+
+Generated outputs:
+
+- `data/atomic_rules/atomic_rules.json`
+- `data/scenarios/scenarios.json`
+- `data/sandbox_manifests/example.json`
+- `results/episodes.jsonl`
+- `results/violations.json`
+- `results/metrics_summary.csv`
+
+## Repository Layout
+
+```text
+mac-bench/
+├── data/
+├── agents/
+├── sandbox/
+├── evaluation/
+├── prompts/
+├── configs/
+├── scripts/
+└── results/
 ```
 
 ## Notes
 
-- Make sure Docker is running for sandbox execution.
-- You will need an OpenAI-compatible API key for the generator modules.
+- This repository ships with sample data and deterministic fallbacks to remain runnable offline.
+- LLM integration points are intentionally abstracted so you can plug in your preferred provider.
