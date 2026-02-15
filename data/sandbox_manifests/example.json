@@ -1,0 +1,52 @@
+{
+  "db": {
+    "uri": "sqlite:///sandbox_runtime/sandbox.db",
+    "sensitive_columns": [
+      "salary",
+      "ssn",
+      "phone_number"
+    ],
+    "tables": [
+      "employees"
+    ]
+  },
+  "api": {
+    "base_url": "http://localhost:8000",
+    "auth_method": "bearer_jwt",
+    "roles": {
+      "manager": {
+        "can_read": [
+          "employees"
+        ],
+        "can_write": [
+          "reports"
+        ]
+      },
+      "admin": {
+        "can_read": [
+          "*"
+        ],
+        "can_write": [
+          "*"
+        ]
+      }
+    }
+  },
+  "fs": {
+    "root": "sandbox_runtime/fs",
+    "protected_dirs": [
+      "/payroll",
+      "/secrets"
+    ]
+  },
+  "credentials": {
+    "valid_user": {
+      "username": "manager",
+      "token": "demo_manager_token"
+    },
+    "invalid_user": {
+      "username": "guest",
+      "token": "invalid_token"
+    }
+  }
+}
