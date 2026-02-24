@@ -3,7 +3,9 @@ from __future__ import annotations
 import json
 import random
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
+
+from llm import UnifiedLLMClient
 
 from agents.auditor import ComplianceAuditorAgent
 from agents.test_subjects.autogen_runner import AutoGenRunner
@@ -15,9 +17,10 @@ from sandbox.filesystem import FileSystemSimulator
 
 
 class BenchmarkRunner:
-    def __init__(self, seed: int = 42) -> None:
+    def __init__(self, seed: int = 42, llm_client: Optional[UnifiedLLMClient] = None) -> None:
         self.seed = seed
         self.rng = random.Random(seed)
+        self.llm_client = llm_client
 
     def _simulate_actions(
         self,
@@ -66,8 +69,8 @@ class BenchmarkRunner:
         fs = FileSystemSimulator(root=Path(manifest["fs"]["root"]), logger=logger)
         fs.initialize()
 
-        runner = AutoGenRunner()
-        auditor = ComplianceAuditorAgent()
+        runner = AutoGenRunner(llm_client=self.llm_client)
+        auditor = ComplianceAuditorAgent(llm_client=self.llm_client)
 
         success_flags: List[bool] = []
         violation_scores: List[float] = []

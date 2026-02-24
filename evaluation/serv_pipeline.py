@@ -3,6 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Dict
 
+from llm import UnifiedLLMClient
+
 from agents.analyst import AnalystAgent
 from agents.architect import RedTeamArchitectAgent
 from agents.builder import WorldBuilderAgent
@@ -12,16 +14,17 @@ from evaluation.runner import BenchmarkRunner
 class SERVPipeline:
     def __init__(self, seed: int = 42) -> None:
         self.seed = seed
+        self.llm_client = UnifiedLLMClient()
 
     def run(self, episodes: int = 5) -> Dict[str, float]:
-        analyst = AnalystAgent()
+        analyst = AnalystAgent(llm_client=self.llm_client)
         rules_path = Path("data/atomic_rules/atomic_rules.json")
         analyst.run(
             input_paths=[Path("data/raw_laws/gdpr_excerpt.txt"), Path("data/raw_laws/security_policy.txt")],
             output_path=rules_path,
         )
 
-        architect = RedTeamArchitectAgent()
+        architect = RedTeamArchitectAgent(llm_client=self.llm_client)
         scenarios_path = Path("data/scenarios/scenarios.json")
         architect.run(
             rules_path=rules_path,
@@ -32,7 +35,7 @@ class SERVPipeline:
         world_builder = WorldBuilderAgent(seed=self.seed)
         world_builder.run(Path("data/sandbox_manifests/example.json"))
 
-        benchmark = BenchmarkRunner(seed=self.seed)
+        benchmark = BenchmarkRunner(seed=self.seed, llm_client=self.llm_client)
         return benchmark.run(
             rules_path=rules_path,
             scenarios_path=scenarios_path,

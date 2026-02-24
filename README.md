@@ -51,6 +51,31 @@ mac-bench/
 └── results/
 ```
 
+## Unified LLM API Integration
+
+The benchmark now supports one **unified OpenAI-compatible API interface** for:
+
+- tested model execution (`test_subject`)
+- policy parsing (`analyst`)
+- scenario generation (`architect`)
+- LLM-as-a-judge auditing (`auditor_judge`)
+
+Configure via environment variables:
+
+```bash
+export MAC_BENCH_API_BASE_URL="https://your-endpoint/v1"
+export MAC_BENCH_API_KEY="your_api_key"
+export MAC_BENCH_MODEL_DEFAULT="gpt-4o-mini"
+
+# Optional role-specific overrides
+export MAC_BENCH_MODEL_ANALYST="gpt-4o"
+export MAC_BENCH_MODEL_ARCHITECT="gpt-4o"
+export MAC_BENCH_MODEL_TEST_SUBJECT="gpt-4.1"
+export MAC_BENCH_MODEL_AUDITOR_JUDGE="gpt-4o"
+```
+
+If these variables are not provided, the framework automatically falls back to deterministic offline behavior.
+
 ## Notes
 
 - This repository ships with sample data and deterministic fallbacks to remain runnable offline.
