@@ -3,3 +3,26 @@ temperature: 0.7
 default_framework: AutoGen
 auditor_backend: deterministic
 tool_budget: 20
+api:
+  base_url_env: MAC_BENCH_API_BASE_URL
+  api_key_env: MAC_BENCH_API_KEY
+  timeout_env: MAC_BENCH_API_TIMEOUT_S
+  default_model_env: MAC_BENCH_MODEL_DEFAULT
+  role_model_envs:
+    analyst: MAC_BENCH_MODEL_ANALYST
+    architect: MAC_BENCH_MODEL_ARCHITECT
+    test_subject: MAC_BENCH_MODEL_TEST_SUBJECT
+    auditor_judge: MAC_BENCH_MODEL_AUDITOR_JUDGE
+models:
+  - GPT-5
+  - GPT-4o
+  - Claude-3.5
+  - Claude-3
+  - Gemini-2.5
+  - Gemini-3
+  - Llama-3.1-70B
+  - Llama-3.1-8B
+  - Qwen-3-8B
+  - Qwen-3-32B
+  - DeepSeek-V3
+  - Mixtral-8x22B
